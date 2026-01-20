@@ -1,0 +1,8 @@
+node_modules
+.env
+para_web_api.postman_collection.json
+verify_folder.js
+verify_update.js
+README_FOLDERS.md
+postgres
+verify_auth.js
