@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 098wR0MiIXMWtNFuCT0h3zfmTydX7WrATAhHhi6C1lt7WuqIrV8CXm4uYGv6g7D
+\restrict njeb9BtmKjrfhVphMWZe4J15gHY9TnhpcdgVmEr9CzmuHJOoqekvkrBwc3aGBD6
 
 -- Dumped from database version 18.1
 -- Dumped by pg_dump version 18.1
@@ -245,14 +245,6 @@ ALTER TABLE ONLY public.folders
 
 
 --
--- Name: folders folders_user_id_name_key; Type: CONSTRAINT; Schema: public; Owner: root
---
-
-ALTER TABLE ONLY public.folders
-    ADD CONSTRAINT folders_user_id_name_key UNIQUE (user_id, name);
-
-
---
 -- Name: note_blocks note_blocks_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
@@ -440,5 +432,5 @@ ALTER TABLE ONLY public.tasks
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 098wR0MiIXMWtNFuCT0h3zfmTydX7WrATAhHhi6C1lt7WuqIrV8CXm4uYGv6g7D
+\unrestrict njeb9BtmKjrfhVphMWZe4J15gHY9TnhpcdgVmEr9CzmuHJOoqekvkrBwc3aGBD6
 

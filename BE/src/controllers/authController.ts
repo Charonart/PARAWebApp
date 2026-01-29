@@ -56,7 +56,56 @@ export const register = async (req: Request, res: Response) => {
 };
 
 // Placeholder for login
-export const login = async (_req: Request, res: Response) => {
-    // ... login logic would go here
-    res.status(501).json({ message: 'Not implemented yet' });
+export const login = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            res.status(400).json({ message: 'Email and password are required' });
+            return;
+        }
+
+        const user = await userModel.findByEmail(email);
+        if (!user) {
+            res.status(401).json({ message: 'Invalid email or password' });
+            return;
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password_hash);
+        if (!isMatch) {
+            res.status(401).json({ message: 'Invalid email or password' });
+            return;
+        }
+
+        // Update last_login_at
+        await userModel.update(user.id, { last_login_at: new Date() });
+
+        const token = jwt.sign(
+            { userId: user.id, email: user.email },
+            process.env.JWT_SECRET || 'your_jwt_secret',
+            { expiresIn: '24h' }
+        );
+
+        res.status(200).json({
+            message: 'Login successful',
+            token,
+            user: {
+                id: user.id,
+                email: user.email,
+                is_verified: user.is_verified,
+                last_login_at: new Date() // Return the new time
+            }
+        });
+
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+export const verifyEmail = async (req: Request, res: Response): Promise<void> => {
+    const { token } = req.query;
+    console.log(`Verify request for token: ${token}`);
+
+    res.status(200).json({ message: 'Email verification logic not fully implemented. (Requires email service)', receivedToken: token });
 };

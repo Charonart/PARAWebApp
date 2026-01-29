@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict n0ZhvkN6JNNrqwc2orrA6Twv2PHbaoSHjOhnG9afvwh8xAxDefg5X9spEj0vEBD
+\restrict zMBS4lZlEeFI1cS2VHCo5px5OVJXOghEn6iUdxlePa5CcTBkeKs0jfWhAu35GSH
 
 -- Dumped from database version 18.1
 -- Dumped by pg_dump version 18.1
@@ -26,6 +26,7 @@ SET row_security = off;
 COPY public.users (id, email, password_hash, is_verified, last_login_at, created_at, updated_at, deleted_at) FROM stdin;
 a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11	demo@para.com	hashed_password_123	t	2026-01-19 13:44:36.457672	2026-01-19 13:44:36.457672	\N	\N
 b0eebc99-9c0b-4ef8-bb6d-6bb9bd380b22	john.doe@example.com	hashed_password_456	t	2026-01-19 13:44:36.457672	2026-01-19 13:44:36.457672	\N	\N
+d79e042a-e283-4a89-97e9-65ac8e712751	Lequy2710@gmail.com	$2b$10$5G6Fw29tBJ5sGQcJScVJvuZ1EeGT2nEMUJJwycQUWCm9tpJl2PUz.	f	\N	2026-01-20 04:42:56.789392	\N	\N
 \.
 
 
@@ -84,6 +85,12 @@ COPY public.folders (id, user_id, name, type, status, target_outcome, due_date, 
 22222222-9c0b-4ef8-bb6d-6bb9bd380048	a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11	ARCHIVE - Generated 38	ARCHIVE	INACTIVE	\N	\N	\N	2026-01-19 13:44:36.457672	\N	\N
 22222222-9c0b-4ef8-bb6d-6bb9bd380049	a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11	RESOURCE - Generated 39	RESOURCE	ACTIVE	\N	\N	\N	2026-01-19 13:44:36.457672	\N	\N
 22222222-9c0b-4ef8-bb6d-6bb9bd380050	a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11	RESOURCE - Generated 40	RESOURCE	INACTIVE	\N	\N	\N	2026-01-19 13:44:36.457672	\N	\N
+bb9a9d43-d533-4053-839c-e8d820de0b82	a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11	Debug Folder 1768832683531	PROJECT	ACTIVE	\N	\N	\N	2026-01-19 14:24:43.62732	\N	\N
+0250fc51-fdbf-4b6e-a414-811befae53ac	a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11	Verification Folder 1768832700234	PROJECT	ACTIVE	\N	\N	\N	2026-01-19 14:25:00.278048	\N	\N
+d9ed8b8c-137d-415e-8499-7e10da85a274	a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11	Dự án Mới	PROJECT	ACTIVE	\N	\N	\N	2026-01-19 14:29:30.31055	\N	\N
+e94a224c-d53f-4dcc-bdc4-3e5f5a97c0e4	a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11	Dự án	PROJECT	ACTIVE	\N	\N	\N	2026-01-19 14:35:23.676073	\N	\N
+ab8935d2-b50f-4578-91f3-7338f010d001	a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11	Project to Archive 1768833619119	ARCHIVE	INACTIVE	\N	\N	\N	2026-01-19 14:40:19.21996	2026-01-19 14:40:19.259605	\N
+ddd31aa5-4dbb-4b18-924e-0fdfdeb1ae5d	d79e042a-e283-4a89-97e9-65ac8e712751	New Project via Postman	PROJECT	ACTIVE	\N	\N	\N	2026-01-20 04:44:49.205459	2026-01-20 04:46:03.176193	\N
 \.
 
 
@@ -411,5 +418,5 @@ COPY public.tasks (id, folder_id, note_id, title, status, priority, "position", 
 -- PostgreSQL database dump complete
 --
 
-\unrestrict n0ZhvkN6JNNrqwc2orrA6Twv2PHbaoSHjOhnG9afvwh8xAxDefg5X9spEj0vEBD
+\unrestrict zMBS4lZlEeFI1cS2VHCo5px5OVJXOghEn6iUdxlePa5CcTBkeKs0jfWhAu35GSH
 

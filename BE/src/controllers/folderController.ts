@@ -71,6 +71,7 @@ export const FolderController = {
     // 3. Hàm xử lý logic cập nhật Folder (Sửa tên, chuyển Type, Soft Delete, v.v.)
     updateFolder: async (req: Request, res: Response) => {
         try {
+            const userId = req.user.userId;
             const { id } = req.params;
             const { name, type, status, target_outcome, due_date, completed_at } = req.body;
             // Lưu ý: Không cho phép update deleted_at từ client ở đây (dùng API xóa riêng nếu cần)
@@ -92,12 +93,13 @@ export const FolderController = {
                 return;
             }
 
-            const updatedFolder = await folderModel.update(id as string, updateData);
+            // use updateByUser
+            const updatedFolder = await folderModel.updateByUser(id as string, userId, updateData);
 
             if (!updatedFolder) {
                 res.status(404).json({
                     success: false,
-                    message: 'Folder không tồn tại'
+                    message: 'Folder không tồn tại hoặc bạn không có quyền'
                 });
                 return;
             }
@@ -109,6 +111,79 @@ export const FolderController = {
             });
         } catch (error) {
             console.error('Lỗi tại updateFolder:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Lỗi server nội bộ'
+            });
+        }
+    },
+
+    // 4. Get Folder By ID
+    getFolderById: async (req: Request, res: Response) => {
+        try {
+            const userId = req.user.userId;
+            const { id } = req.params;
+
+            // use findByIdAndUser
+            const folder = await folderModel.findByIdAndUser(id as string, userId);
+
+            if (!folder) {
+                res.status(404).json({
+                    success: false,
+                    message: 'Folder không tồn tại hoặc bạn không có quyền'
+                });
+                return;
+            }
+
+            res.status(200).json({
+                success: true,
+                message: 'Lấy thông tin Folder thành công',
+                data: folder
+            });
+        } catch (error) {
+            console.error('Lỗi tại getFolderById:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Lỗi server nội bộ'
+            });
+        }
+    },
+
+    // 5. Delete Folder (Soft Delete)
+    deleteFolder: async (req: Request, res: Response) => {
+        try {
+            const userId = req.user.userId;
+            const { id } = req.params;
+
+            // Check if folder exists first? Optional but good for 404
+            // use findByIdAndUser
+            const folder = await folderModel.findByIdAndUser(id as string, userId);
+            if (!folder) {
+                res.status(404).json({
+                    success: false,
+                    message: 'Folder không tồn tại hoặc bạn không có quyền'
+                });
+                return;
+            }
+
+            // use softDeleteByUser
+            const success = await folderModel.softDeleteByUser(id as string, userId);
+
+            if (!success) {
+                res.status(500).json({
+                    success: false,
+                    message: 'Xóa Folder thất bại'
+                });
+                return;
+            }
+
+            res.status(200).json({
+                success: true,
+                message: 'Xóa Folder thành công'
+            });
+
+        } catch (error) {
+            console.error('Lỗi tại deleteFolder:', error);
             res.status(500).json({
                 success: false,
                 message: 'Lỗi server nội bộ'

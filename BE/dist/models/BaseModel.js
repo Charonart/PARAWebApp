@@ -51,7 +51,7 @@ class BaseModel {
     async create(data) {
         const keys = Object.keys(data);
         const values = Object.values(data);
-        const columns = keys.join(', ');
+        const columns = keys.map(key => `"${key}"`).join(', ');
         const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
         const query = `
             INSERT INTO ${this.tableName} (${columns}) 
@@ -65,7 +65,7 @@ class BaseModel {
         const keys = Object.keys(data);
         if (keys.length === 0)
             return null;
-        const setClause = keys.map((key, i) => `${key} = $${i + 2}`).join(', ');
+        const setClause = keys.map((key, i) => `"${key}" = $${i + 2}`).join(', ');
         const values = Object.values(data);
         const query = `
             UPDATE ${this.tableName} 

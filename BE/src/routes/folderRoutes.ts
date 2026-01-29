@@ -10,6 +10,13 @@ router.get('/', FolderController.getAllFolders);
 router.post('/', FolderController.createFolder);
 
 // Định nghĩa route: PUT /api/folders/:id
+// Định nghĩa route: PUT /api/folders/:id
 router.put('/:id', FolderController.updateFolder);
+
+// Định nghĩa route: GET /api/folders/:id
+router.get('/:id', FolderController.getFolderById);
+
+// Định nghĩa route: DELETE /api/folders/:id
+router.delete('/:id', FolderController.deleteFolder);
 
 export default router;
