@@ -11,7 +11,7 @@ class NoteModel extends BaseModel_1.BaseModel {
         super(...arguments);
         this.tableName = 'notes';
     }
-    async getAll(userId, folderId, search) {
+    async getAll(userId, folderId, search, options) {
         let query = `
             SELECT n.* 
             FROM notes n
@@ -27,7 +27,10 @@ class NoteModel extends BaseModel_1.BaseModel {
             query += ` AND n.title ILIKE $${values.length + 1}`;
             values.push(`%${search}%`);
         }
-        query += ` ORDER BY n.created_at DESC`;
+        query += ` ORDER BY ${options?.orderBy || 'n.created_at DESC'}`;
+        if (options?.limit) {
+            query += ` LIMIT ${options.limit}`;
+        }
         const result = await database_1.default.query(query, values);
         return result.rows;
     }

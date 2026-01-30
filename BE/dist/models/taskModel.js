@@ -11,7 +11,7 @@ class TaskModel extends BaseModel_1.BaseModel {
         super(...arguments);
         this.tableName = 'tasks';
     }
-    async getAll(userId, folderId, noteId, status) {
+    async getAll(userId, folderId, noteId, status, options) {
         let query = `
             SELECT t.* 
             FROM tasks t
@@ -31,7 +31,10 @@ class TaskModel extends BaseModel_1.BaseModel {
             query += ` AND t.status = $${values.length + 1}`;
             values.push(status);
         }
-        query += ` ORDER BY t.priority ASC, t.created_at DESC`;
+        query += ` ORDER BY ${options?.orderBy || 't.priority ASC, t.created_at DESC'}`;
+        if (options?.limit) {
+            query += ` LIMIT ${options.limit}`;
+        }
         const result = await database_1.default.query(query, values);
         return result.rows;
     }

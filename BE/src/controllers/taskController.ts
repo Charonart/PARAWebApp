@@ -10,8 +10,10 @@ export const TaskController = {
             const folderId = req.query.folderId as string;
             const noteId = req.query.noteId as string;
             const status = req.query.status as string;
+            const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
+            const sort = req.query.sort as string;
 
-            const tasks = await taskModel.getAll(userId, folderId, noteId, status);
+            const tasks = await taskModel.getAll(userId, folderId, noteId, status, { limit, orderBy: sort });
 
             res.status(200).json({ success: true, data: tasks });
         } catch (error) {

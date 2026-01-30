@@ -39,7 +39,7 @@ export class FolderModel extends BaseModel {
     }
 
     // Lấy toàn bộ Folders của một User
-    async getAll(userId: string, type?: string): Promise<IFolder[]> {
+    async getAll(userId: string, type?: string, options?: { limit?: number, orderBy?: string }): Promise<IFolder[]> {
         const conditions: any = { user_id: userId };
 
         if (type) {
@@ -47,8 +47,10 @@ export class FolderModel extends BaseModel {
         }
 
         // Sử dụng hàm findAll từ BaseModel, kèm theo sắp xếp
-        // Chú ý: BaseModel mặc định lấy *
-        return this.findAll(conditions, { orderBy: 'created_at DESC' });
+        return this.findAll(conditions, {
+            orderBy: options?.orderBy || 'created_at DESC',
+            limit: options?.limit
+        });
     }
 }
 

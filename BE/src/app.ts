@@ -8,6 +8,7 @@ import noteRoutes from './routes/noteRoutes';
 import blockRoutes from './routes/blockRoutes';
 import taskRoutes from './routes/taskRoutes';
 import tagRoutes from './routes/tagRoutes';
+import dashboardRoutes from './routes/dashboardRoutes';
 
 import { authMiddleware } from './middlewares/authMiddleware';
 
@@ -25,6 +26,7 @@ app.use('/api/notes', authMiddleware, noteRoutes);
 app.use('/api/blocks', authMiddleware, blockRoutes);
 app.use('/api/tasks', authMiddleware, taskRoutes);
 app.use('/api/tags', authMiddleware, tagRoutes);
+app.use('/api/dashboard', authMiddleware, dashboardRoutes);
 
 
 // Route kiểm tra health

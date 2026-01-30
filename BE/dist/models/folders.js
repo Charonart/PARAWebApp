@@ -36,12 +36,15 @@ class FolderModel extends BaseModel_1.BaseModel {
         const result = await database_1.default.query(query, [id, userId]);
         return (result.rowCount ?? 0) > 0;
     }
-    async getAll(userId, type) {
+    async getAll(userId, type, options) {
         const conditions = { user_id: userId };
         if (type) {
             conditions.type = type;
         }
-        return this.findAll(conditions, { orderBy: 'created_at DESC' });
+        return this.findAll(conditions, {
+            orderBy: options?.orderBy || 'created_at DESC',
+            limit: options?.limit
+        });
     }
 }
 exports.FolderModel = FolderModel;

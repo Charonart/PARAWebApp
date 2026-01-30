@@ -7,7 +7,7 @@ export class TaskModel extends BaseModel {
     tableName = 'tasks';
 
     // Override getAll to support filtering and USER ID check
-    async getAll(userId: string, folderId?: string, noteId?: string, status?: string): Promise<ITask[]> {
+    async getAll(userId: string, folderId?: string, noteId?: string, status?: string, options?: { limit?: number, orderBy?: string }): Promise<ITask[]> {
         let query = `
             SELECT t.* 
             FROM tasks t
@@ -31,7 +31,11 @@ export class TaskModel extends BaseModel {
             values.push(status);
         }
 
-        query += ` ORDER BY t.priority ASC, t.created_at DESC`;
+        query += ` ORDER BY ${options?.orderBy || 't.priority ASC, t.created_at DESC'}`;
+
+        if (options?.limit) {
+            query += ` LIMIT ${options.limit}`;
+        }
 
         const result = await pool.query(query, values);
         return result.rows;

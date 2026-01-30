@@ -8,7 +8,9 @@ exports.NoteController = {
             const userId = req.user.userId;
             const folderId = req.query.folderId;
             const search = req.query.search;
-            const notes = await noteModel_1.noteModel.getAll(userId, folderId, search);
+            const limit = req.query.limit ? parseInt(req.query.limit, 10) : undefined;
+            const sort = req.query.sort;
+            const notes = await noteModel_1.noteModel.getAll(userId, folderId, search, { limit, orderBy: sort });
             res.status(200).json({
                 success: true,
                 data: notes

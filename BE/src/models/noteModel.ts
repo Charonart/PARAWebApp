@@ -7,7 +7,7 @@ export class NoteModel extends BaseModel {
     tableName = 'notes';
 
     // Helper: Build WHERE clause for getAll with filtering
-    async getAll(userId: string, folderId?: string, search?: string): Promise<INote[]> {
+    async getAll(userId: string, folderId?: string, search?: string, options?: { limit?: number, orderBy?: string }): Promise<INote[]> {
         let query = `
             SELECT n.* 
             FROM notes n
@@ -26,7 +26,11 @@ export class NoteModel extends BaseModel {
             values.push(`%${search}%`);
         }
 
-        query += ` ORDER BY n.created_at DESC`;
+        query += ` ORDER BY ${options?.orderBy || 'n.created_at DESC'}`;
+
+        if (options?.limit) {
+            query += ` LIMIT ${options.limit}`;
+        }
 
         const result = await pool.query(query, values);
         return result.rows;

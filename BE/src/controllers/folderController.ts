@@ -10,9 +10,11 @@ export const FolderController = {
 
             // Lấy type từ query params (ví dụ: ?type=PROJECT)
             const type = req.query.type as string;
+            const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
+            const sort = req.query.sort as string;
 
             // Gọi Model để lấy dữ liệu từ DB
-            const folders = await folderModel.getAll(userId, type);
+            const folders = await folderModel.getAll(userId, type, { limit, orderBy: sort });
 
             // Trả về response thành công
             res.status(200).json({

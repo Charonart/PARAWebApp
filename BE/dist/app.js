@@ -12,6 +12,7 @@ const noteRoutes_1 = __importDefault(require("./routes/noteRoutes"));
 const blockRoutes_1 = __importDefault(require("./routes/blockRoutes"));
 const taskRoutes_1 = __importDefault(require("./routes/taskRoutes"));
 const tagRoutes_1 = __importDefault(require("./routes/tagRoutes"));
+const dashboardRoutes_1 = __importDefault(require("./routes/dashboardRoutes"));
 const authMiddleware_1 = require("./middlewares/authMiddleware");
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -23,6 +24,7 @@ app.use('/api/notes', authMiddleware_1.authMiddleware, noteRoutes_1.default);
 app.use('/api/blocks', authMiddleware_1.authMiddleware, blockRoutes_1.default);
 app.use('/api/tasks', authMiddleware_1.authMiddleware, taskRoutes_1.default);
 app.use('/api/tags', authMiddleware_1.authMiddleware, tagRoutes_1.default);
+app.use('/api/dashboard', authMiddleware_1.authMiddleware, dashboardRoutes_1.default);
 app.get('/api/health', (_req, res) => {
     res.status(200).json({ status: 'OK', message: 'Server PARA đang chạy tốt với Express!' });
 });

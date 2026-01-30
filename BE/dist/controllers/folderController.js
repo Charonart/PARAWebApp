@@ -7,7 +7,9 @@ exports.FolderController = {
         try {
             const userId = req.user.userId;
             const type = req.query.type;
-            const folders = await folders_1.folderModel.getAll(userId, type);
+            const limit = req.query.limit ? parseInt(req.query.limit, 10) : undefined;
+            const sort = req.query.sort;
+            const folders = await folders_1.folderModel.getAll(userId, type, { limit, orderBy: sort });
             res.status(200).json({
                 success: true,
                 message: 'Lấy danh sách Folders thành công!',

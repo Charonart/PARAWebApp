@@ -35,8 +35,8 @@ export const register = async (req: Request, res: Response) => {
         // Generate token immediately after registration
         const token = jwt.sign(
             { userId: newUser.id, email: newUser.email },
-            process.env.JWT_SECRET || 'your_jwt_secret',
-            { expiresIn: '1h' }
+            process.env.JWT_SECRET || 'fallback_secret',
+            { expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as jwt.SignOptions['expiresIn'] }
         );
 
         res.status(201).json({
@@ -82,8 +82,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
         const token = jwt.sign(
             { userId: user.id, email: user.email },
-            process.env.JWT_SECRET || 'your_jwt_secret',
-            { expiresIn: '24h' }
+            process.env.JWT_SECRET || 'fallback_secret',
+            { expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as jwt.SignOptions['expiresIn'] }
         );
 
         res.status(200).json({

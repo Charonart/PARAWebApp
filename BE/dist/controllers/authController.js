@@ -26,7 +26,7 @@ const register = async (req, res) => {
             email,
             password_hash,
         });
-        const token = jsonwebtoken_1.default.sign({ userId: newUser.id, email: newUser.email }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' });
+        const token = jsonwebtoken_1.default.sign({ userId: newUser.id, email: newUser.email }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '365d' });
         res.status(201).json({
             message: 'User registered successfully',
             token,
@@ -61,7 +61,7 @@ const login = async (req, res) => {
             return;
         }
         await userModel.update(user.id, { last_login_at: new Date() });
-        const token = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '24h' });
+        const token = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '365d' });
         res.status(200).json({
             message: 'Login successful',
             token,
